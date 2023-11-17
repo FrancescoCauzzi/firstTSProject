@@ -140,3 +140,304 @@ function f() {
   }
 }
 console.log(f());
+
+// Scoping
+// down here is how not to write a function (avoid using the var keyword instead use let)
+function sumMatrix(matrix: number[][]) {
+  var sum = 0;
+  for (var i = 0; i < matrix.length; i++) {
+    var currentRow = matrix[i];
+    for (var i = 0; i < currentRow.length; i++) {
+      sum += currentRow[i];
+    }
+  }
+  return sum;
+}
+
+//
+let a1: number = 4;
+function foo() {
+  //okay to capture 'a'
+  return a1;
+}
+
+console.log(foo());
+/*
+for (let i = 0; i < 10; i++) {
+  setTimeout(function () {
+    console.log(i);
+  }, 100 * i);
+}
+*/
+
+// Destructuring an object
+let o = {
+  a: "foo",
+  b: 12,
+  c: "bar",
+};
+//let { a, b } = o;
+//console.log(`a: ${a}, b: ${b}`);
+
+let { a, b }: { a: string; b: number } = o; // Destructuring with types also
+
+function keepWholeObject(wholeObject: { a: string; b?: number }): void {
+  let { a, b = 1001 } = wholeObject;
+  console.log(`a: ${a}, b: ${b}`);
+}
+
+keepWholeObject({ a: "hello" }); // b will be defaulted to 1001
+keepWholeObject({ a: "hello", b: 42 }); // b will use the value 42
+
+// Interfaces
+interface IServer {
+  hostname: string;
+  location: string;
+  active: boolean;
+  public_address: IPublicAddress;
+  getPublicAddresInString: () => string; // Methods of the interface
+}
+
+interface IPublicAddress {
+  netmask: string;
+  gateway: string;
+  address: string;
+}
+
+const server: IServer = {
+  hostname: "Pikachu",
+  location: "RM1",
+  active: true,
+  public_address: {
+    netmask: "0000000000000",
+    gateway: "0000000000000",
+    address: "0000000000000",
+  },
+  getPublicAddresInString: function (): string {
+    return `${this.public_address.address}, ${this.public_address.gateway}, ${this.public_address.netmask}`;
+  },
+};
+
+// Indexed Types
+interface ICache {
+  size: number;
+  first: ICacheItem | null;
+  last: ICacheItem | null;
+  items: { [item: string]: ICacheItem }; //"dictionary", "map", or "associative array"
+}
+
+interface ICacheItem {
+  id: string;
+  data: any; // Can be more specific depending on the use case
+}
+
+class MyCustomCache implements ICache {
+  size = 0;
+  first: ICacheItem | null = null;
+  last: ICacheItem | null = null;
+  items: { [item: string]: ICacheItem } = {}; //"dictionary", "map", or "associative array"
+
+  addItem(key: string, item: ICacheItem) {
+    if (this.size === 0) {
+      this.first = item;
+    }
+    this.items[key] = item;
+    this.last = item;
+    this.size++;
+  }
+
+  getItem(key: string): ICacheItem {
+    return this.items[key];
+  }
+
+  // Other cache methods (removeItem, clear, etc.) can be added here
+}
+
+// Usage
+const cache = new MyCustomCache();
+cache.addItem("item1", { id: "1", data: "Data 1" });
+cache.addItem("item2", { id: "2", data: "Data 2" });
+
+console.log(cache.getItem("item1")); // Retrieves the first item
+console.log(cache.items); // show the entire
+
+// Discriminated unions
+interface Square {
+  kind: "square";
+  size: number;
+}
+
+interface Rectangle {
+  kind: "rectangle";
+  width: number;
+  height: number;
+}
+
+interface Circle {
+  kind: "circle";
+  radius: number;
+}
+
+function area(s: Square | Rectangle | Circle): number {
+  switch (s.kind) {
+    case "square":
+      return s.size * s.size;
+    case "rectangle":
+      return s.height * s.width;
+    case "circle":
+      return Math.PI * s.radius ** 2;
+  }
+}
+
+class MyCircle implements Circle {
+  kind: "circle" = "circle";
+  radius: number;
+
+  constructor(radius: number) {
+    this.radius = radius;
+  }
+}
+
+let circle1 = new MyCircle(10);
+
+console.log(area(circle1));
+// Working with interfaces
+/* 
+function printLabel(labelledObj: { label: string }) {
+  console.log(labelledObj.label);
+}
+let myObj = { size: 10, label: "Size 10 Object" };
+printLabel(myObj);
+*/
+
+interface ILabelledValue {
+  label: string;
+}
+function printLabel(labelledObj: ILabelledValue) {
+  console.log(labelledObj.label);
+}
+let myObj = { size: 10, label: "Size 10 Object" };
+printLabel(myObj);
+
+// Optional properties
+interface SquareConfig {
+  color?: string;
+  width?: number;
+}
+
+function createSquare(config: SquareConfig): { color: string; area: number } {
+  let newSquare = { color: "white", area: 100 };
+  if (config.color) {
+    newSquare.color = config.color;
+  }
+  if (config.width) {
+    newSquare.area = config.width * config.width;
+  }
+  return newSquare;
+}
+let mySquare = createSquare({ color: "black" });
+
+/*
+function createSquare(config: SquareConfig): { color: string; area: number } {
+  let newSquare = { color: "white", area: 100 };
+
+  if (config.color) {
+    // Ошибка: Property ’collor’ does not exist on  type ’SquareConfig’
+    newSquare.color = config.collor;
+  }
+  if (config.width) {
+    newSquare.area = config.width * config.width;
+  }
+  return newSquare;
+}
+let mySquare = createSquare({ color: "black" });
+*/
+
+// Readonly properties
+
+interface Point {
+  readonly x: number;
+  readonly y: number;
+}
+
+let p1: Point = { x: 10, y: 20 };
+// p1.x = 5; // error!
+
+// Readonly arrays
+// (arrays with from which all methods that modify it are removed)
+let readOnlyArr: number[] = [1, 2, 3, 4];
+let ro: ReadonlyArray<number> = readOnlyArr;
+ro.forEach((el) => console.log(el));
+// ro[0] = 12; // error!
+// ro.push(5); // error!
+// ro.length = 100; // error!
+// a = ro; // error!
+// this restriction can still be circumvented by using typecasting
+let typeCasting = ro as number[];
+
+interface SquareConfig {
+  color?: string;
+  width?: number;
+}
+
+let squareOptions = { colour: "red", width: 100 }; // No error on this line
+let mySquareh: SquareConfig = squareOptions; // Error if 'colour' is not allowed in SquareConfig
+
+// Function types
+interface SearchFunc {
+  (source: string, subString: string): boolean;
+}
+let mySearch: SearchFunc;
+mySearch = function (src: string, subStr: string) {
+  let result = src.search(subStr);
+  if (result == -1) {
+    return false;
+  } else {
+    return true;
+  }
+};
+// The search method used in these functions is a JavaScript string method that searches for a match using a string or a regular expression, returning the position of the match or -1 if no match is found.
+
+// this down here is also valid
+let mySearch2: SearchFunc;
+mySearch = function (src, sub) {
+  let result = src.search(sub);
+  if (result == -1) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+// Indexed types
+
+// array of strings
+interface StringArray {
+  [index: number]: string;
+}
+let myArray: StringArray;
+myArray = ["Bob", "Josh"];
+let myStr: string = myArray[0];
+
+// array of numbers
+interface NumberArray {
+  [index: number]: number;
+}
+
+let myNumberArray: NumberArray;
+myNumberArray = [1, 2, 3, 6];
+
+// Dictionary of numbers
+interface INumberDictionary {
+  [index: string]: number;
+  length: number; //
+  width: number; // ошибка, the type of ’name’  is not a subtype of the indexer
+}
+
+let myDict: INumberDictionary;
+myDict = {
+  length: 10,
+  width: 15,
+};
+
+console.log(myDict.width);

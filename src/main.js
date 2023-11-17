@@ -117,3 +117,165 @@ function f() {
     }
 }
 console.log(f());
+// Scoping
+// down here is how not to write a function (avoid using the var keyword instead use let)
+function sumMatrix(matrix) {
+    var sum = 0;
+    for (var i = 0; i < matrix.length; i++) {
+        var currentRow = matrix[i];
+        for (var i = 0; i < currentRow.length; i++) {
+            sum += currentRow[i];
+        }
+    }
+    return sum;
+}
+//
+let a1 = 4;
+function foo() {
+    //okay to capture 'a'
+    return a1;
+}
+console.log(foo());
+/*
+for (let i = 0; i < 10; i++) {
+  setTimeout(function () {
+    console.log(i);
+  }, 100 * i);
+}
+*/
+// Destructuring an object
+let o = {
+    a: "foo",
+    b: 12,
+    c: "bar",
+};
+//let { a, b } = o;
+//console.log(`a: ${a}, b: ${b}`);
+let { a, b } = o; // Destructuring with types also
+function keepWholeObject(wholeObject) {
+    let { a, b = 1001 } = wholeObject;
+    console.log(`a: ${a}, b: ${b}`);
+}
+keepWholeObject({ a: "hello" }); // b will be defaulted to 1001
+keepWholeObject({ a: "hello", b: 42 }); // b will use the value 42
+const server = {
+    hostname: "Pikachu",
+    location: "RM1",
+    active: true,
+    public_address: {
+        netmask: "0000000000000",
+        gateway: "0000000000000",
+        address: "0000000000000",
+    },
+    getPublicAddresInString: function () {
+        return `${this.public_address.address}, ${this.public_address.gateway}, ${this.public_address.netmask}`;
+    },
+};
+class MyCustomCache {
+    constructor() {
+        this.size = 0;
+        this.first = null;
+        this.last = null;
+        this.items = {}; //"dictionary", "map", or "associative array"
+        // Other cache methods (removeItem, clear, etc.) can be added here
+    }
+    addItem(key, item) {
+        if (this.size === 0) {
+            this.first = item;
+        }
+        this.items[key] = item;
+        this.last = item;
+        this.size++;
+    }
+    getItem(key) {
+        return this.items[key];
+    }
+}
+// Usage
+const cache = new MyCustomCache();
+cache.addItem("item1", { id: "1", data: "Data 1" });
+cache.addItem("item2", { id: "2", data: "Data 2" });
+console.log(cache.getItem("item1")); // Retrieves the first item
+console.log(cache.items); // show the entire
+function area(s) {
+    switch (s.kind) {
+        case "square":
+            return s.size * s.size;
+        case "rectangle":
+            return s.height * s.width;
+        case "circle":
+            return Math.PI * s.radius ** 2;
+    }
+}
+class MyCircle {
+    constructor(radius) {
+        this.kind = "circle";
+        this.radius = radius;
+    }
+}
+let circle1 = new MyCircle(10);
+console.log(area(circle1));
+function printLabel(labelledObj) {
+    console.log(labelledObj.label);
+}
+let myObj = { size: 10, label: "Size 10 Object" };
+printLabel(myObj);
+function createSquare(config) {
+    let newSquare = { color: "white", area: 100 };
+    if (config.color) {
+        newSquare.color = config.color;
+    }
+    if (config.width) {
+        newSquare.area = config.width * config.width;
+    }
+    return newSquare;
+}
+let mySquare = createSquare({ color: "black" });
+let p1 = { x: 10, y: 20 };
+// p1.x = 5; // error!
+// Readonly arrays
+// (arrays with from which all methods that modify it are removed)
+let readOnlyArr = [1, 2, 3, 4];
+let ro = readOnlyArr;
+ro.forEach((el) => console.log(el));
+// ro[0] = 12; // error!
+// ro.push(5); // error!
+// ro.length = 100; // error!
+// a = ro; // error!
+// this restriction can still be circumvented by using typecasting
+let typeCasting = ro;
+let squareOptions = { colour: "red", width: 100 }; // No error on this line
+let mySquareh = squareOptions; // Error if 'colour' is not allowed in SquareConfig
+let mySearch;
+mySearch = function (src, subStr) {
+    let result = src.search(subStr);
+    if (result == -1) {
+        return false;
+    }
+    else {
+        return true;
+    }
+};
+// The search method used in these functions is a JavaScript string method that searches for a match using a string or a regular expression, returning the position of the match or -1 if no match is found.
+// this down here is also valid
+let mySearch2;
+mySearch = function (src, sub) {
+    let result = src.search(sub);
+    if (result == -1) {
+        return false;
+    }
+    else {
+        return true;
+    }
+};
+let myArray;
+myArray = ["Bob", "Josh"];
+let myStr = myArray[0];
+let myNumberArray;
+myNumberArray = [1, 2, 3, 6];
+let myDict;
+myDict = {
+    length: 10,
+    width: 15,
+};
+console.log(myDict.width);

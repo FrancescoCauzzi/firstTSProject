@@ -1,79 +1,56 @@
 "use strict";
-// Part two
-// Inheritance
+// FUNCTIONS
+console.log("Functions!!");
+// Named function
+function add(x, y) {
+    return x + y;
+}
+// Anonymous function
+let myAdd = function (x, y) {
+    return x + y;
+};
+console.log(add(19, 2));
+let myAdd2 = function (x, y) {
+    return x + y;
+};
+let myAdd3 = function (x, y) {
+    return x + y;
+};
+// Inferring types
+// myAdd has the full function type
+let myAdd4 = function (x, y) {
+    return x + y;
+};
+// Parameters ’x’ and ’y’ — has "number" type
+let myAdd5 = function (x, y) {
+    return x + y;
+};
+let x = 4;
+// Best general type
+let xxx = [0, 1, null];
 class Animal {
-    constructor(theName) {
-        this.name = theName;
-    }
-    move(distanceInMeters = 0) {
-        console.log(`${this.name} moved ${distanceInMeters}m.`);
+    move() {
+        console.log("Moving along!");
     }
 }
-class Frog extends Animal {
-    constructor(name) {
-        super(name);
-    }
-    move(distanceInMeters = 2) {
-        console.log("Jumping...");
-        super.move(distanceInMeters);
-    }
+class Rhino extends Animal {
 }
-class Horse extends Animal {
-    constructor(name) {
-        super(name);
-    }
-    move(distanceInMeters = 45) {
-        console.log("Galloping...");
-        super.move(distanceInMeters);
-    }
+class Elephant extends Animal {
 }
-let jackTheFrog = new Frog("Froggy the Traveller");
-let mrhorse = new Horse("MrHorse");
-jackTheFrog.move();
-mrhorse.move(34);
-class InterfaceInheritanceClass {
+class Snake extends Animal {
 }
-// Class inheritance
-class BaseClass {
-}
-class DerivedFromBaseClass extends BaseClass {
-}
-class MultipleInterfaces {
-}
-// Access modifiers
-class AnimalPrivate {
-    constructor(theName) {
-        this.name = theName;
-    }
-    getName() {
-        return this.name;
-    }
-}
-// new AnimalPrivate("Cat").name; // erroe\: ’name’ is private;
-let catPrivate = new AnimalPrivate("Micio");
-console.log(catPrivate.getName());
-class AnimalTest {
-    constructor(theName) {
-        this.name = theName;
-    }
-    // methods
-    getName() {
-        return this.name;
-    }
-}
-class Cat extends AnimalTest {
-    constructor() {
-        super("Cat");
-    }
-}
-class Employee {
-    constructor(theName) {
-        this.name = theName;
-    }
-}
-let animal = new AnimalTest("Goat");
-let cat = new Cat();
-console.log(cat.getName());
-let employee = new Employee("Jack");
-animal = cat;
-// animal = employee; // error: ’Animal’ and ’Employee’are not compatible
+let zoo1 = [new Rhino(), new Elephant(), new Snake()];
+let zoo2 = [new Rhino(), new Elephant(), new Snake()];
+// Context type
+// window.onmousedown = function (mouseEvent) {
+// console.log(mouseEvent.buton); //<- Error
+// };
+window.onmousedown = function (MouseEvent) {
+    console.log(MouseEvent.buton); // < - No error is    shown now
+};
+// Anonymous Functions
+let addVar = function (a, b) {
+    return a + b;
+};
+var addVarResult = addVar(2, 3);
+console.log("addVarResult: " + addVarResult);

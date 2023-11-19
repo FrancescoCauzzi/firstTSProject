@@ -7,6 +7,7 @@
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/main.ts":
@@ -15,7 +16,7 @@
   \*********************/
 /***/ (() => {
 
-eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: TypeScript emitted no output for C:\\\\Users\\\\Francesco\\\\Desktop\\\\Typescript\\\\Projects\\\\firstTSProject\\\\src\\\\main.ts.\\n    at makeSourceMapAndFinish (C:\\\\Users\\\\Francesco\\\\Desktop\\\\Typescript\\\\Projects\\\\firstTSProject\\\\node_modules\\\\ts-loader\\\\dist\\\\index.js:55:18)\\n    at successLoader (C:\\\\Users\\\\Francesco\\\\Desktop\\\\Typescript\\\\Projects\\\\firstTSProject\\\\node_modules\\\\ts-loader\\\\dist\\\\index.js:42:5)\\n    at Object.loader (C:\\\\Users\\\\Francesco\\\\Desktop\\\\Typescript\\\\Projects\\\\firstTSProject\\\\node_modules\\\\ts-loader\\\\dist\\\\index.js:23:5)\");\n\n//# sourceURL=webpack://firsttsproject/./src/main.ts?");
+eval("\n// FUNCTIONS\nconsole.log(\"Functions!!\");\n// Named function\nfunction add(x, y) {\n    return x + y;\n}\n// Anonymous function\nlet myAdd = function (x, y) {\n    return x + y;\n};\nconsole.log(add(19, 2));\nlet myAdd2 = function (x, y) {\n    return x + y;\n};\nlet myAdd3 = function (x, y) {\n    return x + y;\n};\n// Inferring types\n// myAdd has the full function type\nlet myAdd4 = function (x, y) {\n    return x + y;\n};\n// Parameters ’x’ and ’y’ — has \"number\" type\nlet myAdd5 = function (x, y) {\n    return x + y;\n};\nlet x = 4;\n// Best general type\nlet xxx = [0, 1, null];\nclass Animal {\n    move() {\n        console.log(\"Moving along!\");\n    }\n}\nclass Rhino extends Animal {\n}\nclass Elephant extends Animal {\n}\nclass Snake extends Animal {\n}\nlet zoo1 = [new Rhino(), new Elephant(), new Snake()];\nlet zoo2 = [new Rhino(), new Elephant(), new Snake()];\n// Context type\n// window.onmousedown = function (mouseEvent) {\n// console.log(mouseEvent.buton); //<- Error\n// };\nwindow.onmousedown = function (MouseEvent) {\n    console.log(MouseEvent.buton); // < - No error is    shown now\n};\n// Anonymous Functions\nlet addVar = function (a, b) {\n    return a + b;\n};\nvar addVarResult = addVar(2, 3);\nconsole.log(\"addVarResult: \" + addVarResult);\n\n\n//# sourceURL=webpack://firsttsproject/./src/main.ts?");
 
 /***/ })
 
@@ -24,7 +25,7 @@ eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	// This entry module doesn't tell about it's top-level declarations so it can't be inlined
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
 /******/ 	var __webpack_exports__ = {};
 /******/ 	__webpack_modules__["./src/main.ts"]();
 /******/ 	

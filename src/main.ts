@@ -1,115 +1,73 @@
-// Part two
+// FUNCTIONS
+console.log("Functions!!");
 
-// Inheritance
+// Named function
+function add(x: number, y: number) {
+  return x + y;
+}
+// Anonymous function
+let myAdd = function (x: number, y: number) {
+  return x + y;
+};
+
+console.log(add(19, 2));
+
+let myAdd2: (x: number, y: number) => number = function (
+  x: number,
+  y: number
+): number {
+  return x + y;
+};
+
+let myAdd3 = function (x: number, y: number): number {
+  return x + y;
+};
+
+// Inferring types
+
+// myAdd has the full function type
+let myAdd4 = function (x: number, y: number): number {
+  return x + y;
+};
+// Parameters ’x’ and ’y’ — has "number" type
+let myAdd5: (baseValue: number, increment: number) => number = function (x, y) {
+  return x + y;
+};
+
+let x = 4;
+
+// Best general type
+
+let xxx = [0, 1, null];
+
 class Animal {
-  name: string;
-  constructor(theName: string) {
-    this.name = theName;
-  }
-  move(distanceInMeters: number = 0) {
-    console.log(`${this.name} moved ${distanceInMeters}m.`);
+  move() {
+    console.log("Moving along!");
   }
 }
 
-class Frog extends Animal {
-  constructor(name: string) {
-    super(name);
-  }
-  move(distanceInMeters = 2) {
-    console.log("Jumping...");
-    super.move(distanceInMeters);
-  }
-}
+class Rhino extends Animal {}
 
-class Horse extends Animal {
-  constructor(name: string) {
-    super(name);
-  }
-  move(distanceInMeters = 45) {
-    console.log("Galloping...");
-    super.move(distanceInMeters);
-  }
-}
-let jackTheFrog = new Frog("Froggy the Traveller");
-let mrhorse: Animal = new Horse("MrHorse");
-jackTheFrog.move();
-mrhorse.move(34);
+class Elephant extends Animal {}
 
-// Interface inheritance
+class Snake extends Animal {}
+let zoo1 = [new Rhino(), new Elephant(), new Snake()];
 
-interface IBase {
-  id: number | undefined;
-}
+let zoo2: Animal[] = [new Rhino(), new Elephant(), new Snake()];
 
-interface IDerivedFromBase extends IBase {
-  name: string | undefined;
-}
+// Context type
 
-class InterfaceInheritanceClass implements IDerivedFromBase {
-  id: number | undefined;
-  name: string | undefined;
-}
+// window.onmousedown = function (mouseEvent) {
+// console.log(mouseEvent.buton); //<- Error
+// };
 
-// Class inheritance
-class BaseClass implements IBase {
-  id: number | undefined;
-}
-class DerivedFromBaseClass extends BaseClass implements IDerivedFromBase {
-  name: string | undefined;
-}
+window.onmousedown = function (MouseEvent: any) {
+  console.log(MouseEvent.buton); // < - No error is    shown now
+};
 
-// implementing multiple interfaces
-interface IFirstInterface {
-  id: number | undefined;
-}
-interface ISecondInterface {
-  name: string | undefined;
-}
-class MultipleInterfaces implements IFirstInterface, ISecondInterface {
-  public id: number | undefined;
-  public name: string | undefined;
-}
-
-// Access modifiers
-
-class AnimalPrivate {
-  private name: string;
-  constructor(theName: string) {
-    this.name = theName;
-  }
-  public getName(): string {
-    return this.name;
-  }
-}
-// new AnimalPrivate("Cat").name; // erroe\: ’name’ is private;
-let catPrivate = new AnimalPrivate("Micio");
-console.log(catPrivate.getName());
-
-class AnimalTest {
-  private name: string;
-  constructor(theName: string) {
-    this.name = theName;
-  }
-  // methods
-  //   public getName(): string {
-  //     return this.name;
-  //   }
-}
-class Cat extends AnimalTest {
-  constructor() {
-    super("Cat");
-  }
-}
-class Employee {
-  private name: string;
-  constructor(theName: string) {
-    this.name = theName;
-  }
-}
-let animal = new AnimalTest("Goat");
-let cat = new Cat();
-//console.log(cat.getName());
-let employee = new Employee("Jack");
-
-animal = cat;
-animal = employee; // error: ’Animal’ and ’Employee’are not compatible Type 'Employee' is not assignable to type 'AnimalTest'. Types have separate declarations of a private property 'name'
+// Anonymous Functions
+let addVar = function (a: number, b: number) {
+  return a + b;
+};
+var addVarResult = addVar(2, 3);
+console.log("addVarResult: " + addVarResult);
